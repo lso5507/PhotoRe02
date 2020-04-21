@@ -1,9 +1,11 @@
 package pjt.lw.Member;
 
-public class member {
+import java.util.List;
+
+public class Member {
 	private String memId;
 	private String memPw;
-	private String imgUrl;
+	private List<String> imgUrl;
 	
 	public void setMemId(String memId) {
 		this.memId=memId;
@@ -18,11 +20,11 @@ public class member {
 		return this.memPw;
 	}
 	public void setImgUrl(String imgUrl) {
-		this.imgUrl=imgUrl;
+		this.imgUrl.add(imgUrl);
 	}
-	public String getImgUrl() {
+	public List<String> getImgUrl() {
 		return this.imgUrl;
-	}s
+	}
 	public String toString() {
 		return this.memId+this.memPw+this.imgUrl;
 		

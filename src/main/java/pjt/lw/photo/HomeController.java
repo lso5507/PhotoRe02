@@ -5,14 +5,20 @@ import java.util.Date;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import pjt.lw.Member.Member;
+import pjt.lw.photo.service.MemberService;
 
 /**
  * Handles requests for the application home page.
@@ -25,6 +31,9 @@ public class HomeController {
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
+	@Autowired
+	MemberService service;
+	
 	@ModelAttribute("serverTime")
 	public String getServerTime(Locale locale) {
 		
@@ -47,8 +56,24 @@ public class HomeController {
 		return "home";
 	}
 	@RequestMapping(value="/login",method=RequestMethod.GET)
-	public String login(HttpServletRequest request) {
+	public String login(@RequestParam("memId")String memId,@RequestParam("memPw")String memPw) {
+		Member mem.
+		
 		return "";
+	}
+	@RequestMapping(value="/modify",method=RequestMethod.GET)
+	public String modify(@RequestParam("memId")String memId,@RequestParam("memPw")String memPw) {
+//		HttpSession session =null;
+//		session.setAttribute("bfMemId", memId);
+//		session.setAttribute("bfMemPw", memPw);
+		
+		
+		return "modifyForm";	
+	}
+	@RequestMapping(value="/modifyForm",method=RequestMethod.GET)
+	public String modifyForm(HttpServletRequest request) {
+		
+		return "modifyForm";
 	}
 
 }
