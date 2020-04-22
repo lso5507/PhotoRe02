@@ -1,11 +1,13 @@
 package pjt.lw.photo.dao;
 
 import java.beans.PropertyVetoException;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
@@ -37,11 +39,25 @@ public class Dao {
 		template.setDataSource(dataSource);
 	}
 	
-	public int memberInsert(Member member) {
+	public int memberInsert(final Member member) {
 		int result = 0;
 		
-		final String sql = "INSERT INTO member_ (memId, memPw, imgUrl) values (?,?,?)";
-		result = template.update(sql,member.getMemId(),member.getMemPw(),member.getImgUrl());
+		final String sql = "INSERT INTO mem (memId, memPw) values (?,?)";
+		
+//		result = template.update(sql,member.getMemId(),member.getMemPw());
+//		
+//		
+		result = template.update(sql, new PreparedStatementSetter() {
+			
+			@Override
+			public void setValues(PreparedStatement pstmt) throws SQLException {
+				pstmt.setString(1, member.getMemId());
+				pstmt.setString(2, member.getMemPw());
+				
+				
+			}
+		});
+		
 		
 		
 		return result;
@@ -50,7 +66,7 @@ public class Dao {
 	public int memberPwUpdate(Member member) {
 		int result = 0;
 		
-		final String sql = "UPDATE member_ SET memPw = ?, imgUrl = ? WHERE memId = ?";
+		final String sql = "UPDATE mem SET memPw = ?, imgUrl = ? WHERE memId = ?";
 		result = template.update(sql,member.getMemPw(),member.getImgUrl(),member.getImgUrl());
 		
 		
@@ -60,7 +76,7 @@ public class Dao {
 	public int memberIdUpdate(Member member) {
 		int result = 0;
 		
-		final String sql = "UPDATE member_ SET memPw = ?, imgUrl = ? WHERE memPw = ?";
+		final String sql = "UPDATE mem SET memPw = ?, imgUrl = ? WHERE memPw = ?";
 		result = template.update(sql,member.getMemPw(),member.getImgUrl(),member.getImgUrl());
 		
 		
@@ -70,7 +86,7 @@ public class Dao {
 	public int memberRemove(Member member) {
 		int result = 0;
 		
-		final String sql = "INSERT INTO member_ (memId, memPw, imgUrl) values (?,?,?)";
+		final String sql = "INSERT INTO mem (memId, memPw, imgUrl) values (?,?,?)";
 		result = template.update(sql,member.getMemId(),member.getMemPw(),member.getImgUrl());
 		
 		
@@ -80,7 +96,7 @@ public class Dao {
 	public Member memberSelect(Member member) {
 		List<Member> members = null;
 		
-		final String sql = "SELECT * FROM member_ WHERE memId = ? AND memPw = ?";
+		final String sql = "SELECT * FROM mem WHERE memId = ? AND memPw = ?";
 		members = template.query(sql, new Object[]{member.getMemId(), member.getMemPw()}, new RowMapper<Member>() {
 
 			@Override

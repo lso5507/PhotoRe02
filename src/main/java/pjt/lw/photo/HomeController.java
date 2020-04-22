@@ -55,11 +55,32 @@ public class HomeController {
 		
 		return "home";
 	}
-	@RequestMapping(value="/login",method=RequestMethod.GET)
-	public String login(@RequestParam("memId")String memId,@RequestParam("memPw")String memPw) {
-		Member mem.
+	@RequestMapping(value="/login",method=RequestMethod.POST)
+	public String login(Member member, HttpSession session) {
+		Member mem = service.search(member);
 		
-		return "";
+		if(mem==null) {
+			
+			return "loginFail";
+		}
+		session.setAttribute("member", mem);
+		return "loginSuccess";
+	}
+	@RequestMapping(value="/joinForm",method=RequestMethod.GET)
+	public String joinForm(Member member, HttpServletRequest request) {
+
+		return "joinForm";
+	}
+	@RequestMapping(value="/join",method=RequestMethod.POST)
+	public String join(Member member, HttpServletRequest request) {
+		Member mem = service.insert(member);
+		
+		if(mem==null) {
+			request.setAttribute("member", member);
+			return "joinFail";
+		}
+		
+		return "joinSuccess";
 	}
 	@RequestMapping(value="/modify",method=RequestMethod.GET)
 	public String modify(@RequestParam("memId")String memId,@RequestParam("memPw")String memPw) {

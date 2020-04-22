@@ -28,7 +28,7 @@ public class MemberService {
 		
 	}
 	public Member insert(Member member) {
-		
+		System.out.println("Insert()");
 		int result = dao.memberInsert(member);
 		if(result==0) {
 			System.out.println("Insert Error");
