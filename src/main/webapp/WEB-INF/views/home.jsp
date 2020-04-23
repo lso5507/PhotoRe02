@@ -6,11 +6,21 @@
 </head>
 <body>
 <h1>
-	Hello world!  
+	Home
 </h1>
-
-<P>  The time on the server is ${serverTime}. </P>
-<a href="photo/joinForm">join</a>
-<a href="photo/loginForm">Login</a>
+	<c:if test="${empty member}">
+		${serverTime}<br>
+		<a href="${cp}/photo/joinForm">JOIN</a> &nbsp;&nbsp; 
+		<a href="${cp}/photo/loginForm">LOGIN</a> &nbsp;&nbsp; 
+	</c:if>
+	
+	<c:if test="${!empty member}">
+		${serverTime}<br>
+		<a href="${cp}/photo/idModifyForm">Id_Modify</a> &nbsp;&nbsp; 
+		<a href="${cp}/photo/pwModifyForm">Pw_Modify</a> &nbsp;&nbsp; 
+		<a href="${cp}/photo/logout">LOGOUT</a> &nbsp;&nbsp;
+		<a href="${cp}/photo/remove">REMOVE</a> &nbsp;&nbsp; 
+	</c:if>
+	
 </body>
 </html>

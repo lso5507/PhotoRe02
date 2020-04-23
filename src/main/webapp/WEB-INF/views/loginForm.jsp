@@ -17,6 +17,8 @@
 </table>
 	<input type="submit" value="login">
 	<input type="button" value="back" onclick="history.back()">
+	<a href="/photo/">Home</a><br>
+	<a href="/photo/joinForm"></a>Join
 </form>
 </body>
 </html>

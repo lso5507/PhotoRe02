@@ -6,10 +6,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementSetter;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
@@ -63,31 +68,49 @@ public class Dao {
 		return result;
 		
 	}
-	public int memberPwUpdate(Member member) {
+
+
+	public static HttpServletRequest getCurrentRequest() {
+ 
+       ServletRequestAttributes sra = (ServletRequestAttributes) RequestContextHolder
+               .currentRequestAttributes();
+ 
+       HttpServletRequest hsr = sra.getRequest();
+     
+       return hsr;
+   }
+	public Member memberUpdate(String keyword,String str) {
 		int result = 0;
+		HttpServletRequest request = getCurrentRequest();
+		HttpSession session = request.getSession();
 		
-		final String sql = "UPDATE mem SET memPw = ?, imgUrl = ? WHERE memId = ?";
-		result = template.update(sql,member.getMemPw(),member.getImgUrl(),member.getImgUrl());
+		Member member = (Member) session.getAttribute("member");
+		System.out.println(member.getMemId());
+		if(str.equals("ID")) {
+			final String sql = "UPDATE mem SET memId = ? WHERE memId = ?";
+			result = template.update(sql,keyword,member.getMemId());
+			member.setMemId(keyword);
+		}
+		
+		else if(str.equals("PW")) {
+			final String sql = "UPDATE mem SET memPw = ? WHERE memId = ?";
+			result = template.update(sql,keyword,member.getMemId());
+			member.setMemPw(keyword);
+		}
+		
+		return member;
 		
 		
-		return result;
+		
+		
 		
 	}
-	public int memberIdUpdate(Member member) {
-		int result = 0;
-		
-		final String sql = "UPDATE mem SET memPw = ?, imgUrl = ? WHERE memPw = ?";
-		result = template.update(sql,member.getMemPw(),member.getImgUrl(),member.getImgUrl());
-		
-		
-		return result;
-		
-	}
+
 	public int memberRemove(Member member) {
 		int result = 0;
 		
-		final String sql = "INSERT INTO mem (memId, memPw, imgUrl) values (?,?,?)";
-		result = template.update(sql,member.getMemId(),member.getMemPw(),member.getImgUrl());
+		final String sql = "DELETE from mem WHERE memId = ? AND memPw=?";
+		result = template.update(sql,member.getMemId(),member.getMemPw());
 		
 		
 		return result;
@@ -97,6 +120,7 @@ public class Dao {
 		List<Member> members = null;
 		
 		final String sql = "SELECT * FROM mem WHERE memId = ? AND memPw = ?";
+		
 		members = template.query(sql, new Object[]{member.getMemId(), member.getMemPw()}, new RowMapper<Member>() {
 
 			@Override
@@ -104,7 +128,7 @@ public class Dao {
 				Member mem = new Member();
 				mem.setMemId(rs.getString("memId"));
 				mem.setMemPw(rs.getString("memPw"));
-				mem.setImgUrl(rs.getString("imgUrl"));
+				
 				
 				return mem;
 			}
@@ -115,5 +139,6 @@ public class Dao {
 			return null;
 		
 		return members.get(0);
+		
 	}
 }

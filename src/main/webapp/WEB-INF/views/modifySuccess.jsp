@@ -6,9 +6,11 @@
 	<link rel="stylesheet" type="text/css" href="/resources/css/normal.css" />
 </head>
 <body>
-<h1>Login Success</h1>
-<h2>ID :${member.getmemId()} </h2>
-<h2>PASSWORD :${member.getMemPw()} </h2>
+	<h1>Modify Success</h1>
+	
+	<h2>ID :${member.getMemId()} </h2>
+	
+	<h2>PASSWORD :${member.getMemPw()} </h2>
 
 </body>
 </html>

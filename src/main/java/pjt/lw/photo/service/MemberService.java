@@ -2,6 +2,8 @@ package pjt.lw.photo.service;
 
 
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,7 +19,7 @@ public class MemberService {
 	Dao dao;
 	
 	public Member search(Member member) {
-		
+		System.out.println("select");
 		Member mem=dao.memberSelect(member);
 		if(mem==null) {
 			System.out.println("Not Found account info");
@@ -37,6 +39,21 @@ public class MemberService {
 		System.out.println("Insert Success");
 		return member;
 	}
+	public Member modify(String key,String str) {
+		System.out.println("modify");
+		Member member = null;
+		if(str.equals("ID")) {
+			member=dao.memberUpdate(key,"ID");
+		}
+		else if(str.equals("PW")) {
+			member=dao.memberUpdate(key,"PW");
+		}
+
+		
+		
+		return member;
+	}
+
 	public Member remove(Member member) {
 		
 		int result =  dao.memberRemove(member);

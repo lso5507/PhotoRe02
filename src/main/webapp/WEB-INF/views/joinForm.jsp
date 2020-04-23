@@ -18,6 +18,8 @@
 </table>
 	<input type="submit" value="join">
 	<input type="button" value="back" onclick="history.back()">
+	<a href="/photo/">Home</a><br>
+	<a href="/photo/loginForm" ></a>Login
 </form>
 </body>
 </html>
