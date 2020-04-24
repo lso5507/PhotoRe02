@@ -59,6 +59,21 @@ public class HomeController {
 		
 		return "home";
 	}
+	@RequestMapping(value = "/test", method = RequestMethod.GET)
+	public String test(HttpServletRequest request) {
+		
+		  logger.debug("###INDEX PAGE###");
+		    String rtnPage = "index";
+		    String ipAddress = request.getHeader("X-FORWARDED-FOR");
+		    if (ipAddress == null) {
+		        ipAddress = request.getRemoteAddr();
+		    }
+		    logger.info(ipAddress + " : " + rtnPage);
+		    
+		
+		
+		return "test";
+	}
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String main(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
@@ -144,6 +159,11 @@ public class HomeController {
 	public String idModifyForm(HttpServletRequest request) {
 
 		return "idModifyForm";
+	}
+	@RequestMapping(value="/testMain",method=RequestMethod.GET)
+	public String testMain(HttpServletRequest request) {
+		
+		return "testMain";
 	}
 	@RequestMapping(value="/pwModifyForm",method=RequestMethod.GET)
 	public String pwModifyForm(HttpServletRequest request) {

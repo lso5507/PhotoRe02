@@ -11,6 +11,6 @@
 	<h2>ID :${member.getMemId()} </h2>
 	
 	<h2>PASSWORD :${member.getMemPw()} </h2>
-
+	<a href="/photo/">Home</a>
 </body>
 </html>
