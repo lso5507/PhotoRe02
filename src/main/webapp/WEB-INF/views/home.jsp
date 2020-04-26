@@ -1,6 +1,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page session="false" %>
-<%@ include file="/WEB-INF/views/header.jsp" %>
+
 
 
 <html>
@@ -8,11 +8,6 @@
 
 
 <head>
-
-
-	
-        
-        
         <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
         <script src="/photo/resources/js/sc.js"></script> 
 

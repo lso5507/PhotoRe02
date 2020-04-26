@@ -49,7 +49,7 @@ public class HomeController {
 	@RequestMapping(value = "/loginForm", method = RequestMethod.GET)
 	public String loginForm() {
 		
-		return "loginForm";
+		return "/loginForm";
 	}
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(Locale locale, Model model) {
@@ -57,7 +57,7 @@ public class HomeController {
 
 		
 		
-		return "home";
+		return "/home";
 	}
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
 	public String test(HttpServletRequest request) {
@@ -80,7 +80,7 @@ public class HomeController {
 		
 		
 		
-		return "home";
+		return "/home";
 	}
 	@RequestMapping(value="/login",method=RequestMethod.POST)
 	public String login(Member member, HttpSession session, HttpServletResponse response) {
@@ -96,15 +96,15 @@ public class HomeController {
 				e.printStackTrace();
 			}
 			
-			return "loginForm";
+			return "/loginForm";
 		}
 		session.setAttribute("member", mem);
-		return "home";
+		return "/home";
 	}
 	@RequestMapping(value="/joinForm",method=RequestMethod.GET)
 	public String joinForm(Member member, HttpServletRequest request) {
 
-		return "joinForm";
+		return "/joinForm";
 	}
 	@RequestMapping(value="/join",method=RequestMethod.POST)
 	public String join(Member member, HttpServletRequest request) {
@@ -115,7 +115,7 @@ public class HomeController {
 			return "joinFail";
 		}
 		
-		return "joinSuccess";
+		return "/joinSuccess";
 	}
 	@RequestMapping(value="/idModify",method=RequestMethod.POST)
 	public String idModify(HttpServletRequest request) {
@@ -129,10 +129,10 @@ public class HomeController {
 			if(member==null) {
 				return "modifyFail";
 			}
-			return "modifySuccess";
+			return "/modifySuccess";
 		}
 		else {
-			return "modifyFail";
+			return "/modifyFail";
 		}
 		
 	}
@@ -148,17 +148,17 @@ public class HomeController {
 			if(member==null) {
 				return "modifyFail";
 			}
-			return "modifySuccess";
+			return "/modifySuccess";
 		}
 		else {
-			return "modifyFail";
+			return "/modifyFail";
 		}
 		
 	}
 	@RequestMapping(value="/idModifyForm",method=RequestMethod.GET)
 	public String idModifyForm(HttpServletRequest request) {
 
-		return "idModifyForm";
+		return "/idModifyForm";
 	}
 	@RequestMapping(value="/testMain",method=RequestMethod.GET)
 	public String testMain(HttpServletRequest request) {
@@ -168,7 +168,7 @@ public class HomeController {
 	@RequestMapping(value="/pwModifyForm",method=RequestMethod.GET)
 	public String pwModifyForm(HttpServletRequest request) {
 		
-		return "pwModifyForm";
+		return "/pwModifyForm";
 	}
 	@RequestMapping(value="/remove",method=RequestMethod.GET)
 	public ModelAndView remove(HttpServletRequest request,HttpSession session) {
@@ -184,7 +184,7 @@ public class HomeController {
 			return mav;
 		}
 		session.invalidate();
-		mav.setViewName("removeSuccess");
+		mav.setViewName("/removeSuccess");
 		return mav;
 	}
 	@RequestMapping("/logout")
@@ -192,7 +192,7 @@ public class HomeController {
 		ModelAndView mav = new ModelAndView();
 		Member member = (Member)session.getAttribute("member");
 		mav.addObject("member", member);
-		mav.setViewName("logout");
+		mav.setViewName("/logout");
 		session.invalidate(); //session √ ±‚»≠
 		
 		return mav;

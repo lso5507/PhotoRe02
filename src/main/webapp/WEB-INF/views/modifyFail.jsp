@@ -3,7 +3,7 @@
 <html>
 <head>
 	<title>Login</title>
-	<link rel="stylesheet" type="text/css" href="/resources/css/normal.css" />
+
 </head>
 <body>
 	<h1>Modify Fail</h1>
@@ -11,6 +11,6 @@
 	<h2>ID :${member.getMemId()} </h2>
 	
 	<h2>PASSWORD :${member.getMemPw()} </h2>
-	<a href="/photo/">Home</a>
+
 </body>
 </html>

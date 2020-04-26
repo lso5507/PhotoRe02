@@ -3,7 +3,7 @@
 <html>
 <head>
 	<title>Login</title>
-	<link rel="stylesheet" type="text/css" href="/resources/css/normal.css" />
+
 </head>
 <body>
 <h1>join Fail</h1>

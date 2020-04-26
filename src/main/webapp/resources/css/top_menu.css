@@ -1,11 +1,20 @@
-*{
-	color:#fff;
+.top{
+	
 	font-weight:bold;
 	font-family:sans-serif;
 	height:50px;
+	color:#fff;
+	background-color: black;
 }
 a{
 	text-decoration: none; 
+	color: #fff;
+}
+body{
+	margin:0px;	
+}
+a:visited {
+  color: #fff;
 }
 #top_index {
   list-style-type: none;
@@ -13,7 +22,7 @@ letter-spacing:2px;
   float:left;
   padding: 0;
   font-size:18px;
-  color:#fff;
+  
   margin-left:10px;
   padding:12px;
 }
@@ -23,8 +32,9 @@ letter-spacing:2px;
 	font-size:18px;
 }
 .dropdown p{
-	
+	margin:0px;
 	padding:10px;
+	padding-right:20px;
 }
 
 .dropdown-content {	
@@ -38,6 +48,7 @@ letter-spacing:2px;
 }
 .dropdown-content a{
 	display:block;
+	font-size:12px; 
 }
 .dropdown:hover .dropdown-content {
   display: block;

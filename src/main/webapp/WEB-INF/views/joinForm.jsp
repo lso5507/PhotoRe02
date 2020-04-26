@@ -3,7 +3,7 @@
 <html>
 <head>
 	<title>Login</title>
-	<link rel="stylesheet" type="text/css" href="/resources/css/normal.css" />
+
 </head>
 <body>
 <form action="join" method="post">
@@ -18,8 +18,7 @@
 </table>
 	<input type="submit" value="join">
 	<input type="button" value="back" onclick="history.back()">
-	<a href="/photo/">Home</a><br>
-	<a href="/photo/loginForm" ></a>Login
+
 </form>
 </body>
 </html>
