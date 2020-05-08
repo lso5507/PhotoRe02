@@ -19,7 +19,10 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
+import org.w3c.dom.Document;
 
 import pjt.lw.Member.Member;
 import pjt.lw.photo.service.MemberService;
@@ -74,6 +77,46 @@ public class HomeController {
 		
 		return "test";
 	}
+	@RequestMapping(value = "/uploadForm", method = RequestMethod.GET)
+	public String uploadForm(HttpServletRequest request) {
+		
+
+		
+				
+		return "uploadForm";
+	}
+	@RequestMapping(value = "/upload", method = RequestMethod.POST)
+	public String upload(MultipartFile	uploadfile,HttpServletResponse response) {
+		
+		  logger.info("upload() POST 호출");
+		    logger.info("파일 이름: {}", uploadfile.getOriginalFilename());
+		    logger.info("파일 크기: {}", uploadfile.getSize());
+		    if(service.imgInsert(uploadfile))
+		    	try {
+		    	PrintWriter outs=response.getWriter();
+				outs.println("<script>alert('Success.'); location.href='/photo/home';</script>");  // java에서 js 명령어 사용
+				outs.flush();
+				return "/home";
+		    	}
+		    catch (Exception e) {
+		    	System.out.println("uploadError"+e.toString());
+			}
+		    else {
+		    	try {
+			    	PrintWriter outs=response.getWriter();
+					outs.println("<script>alert('Fail.'); location.href='/photo/home';</script>");  // java에서 js 명령어 사용
+					outs.flush();
+					return "/home";
+			    	}
+			    catch (Exception e) {
+			    	System.out.println("uploadError"+e.toString());
+				}
+		    }
+		
+		
+		
+		return "upload";
+	}
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
 	public String main(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
@@ -99,6 +142,7 @@ public class HomeController {
 			return "/loginForm";
 		}
 		session.setAttribute("member", mem);
+		session.setAttribute("imgLength", mem.getImgUrl());
 		return "/home";
 	}
 	@RequestMapping(value="/joinForm",method=RequestMethod.GET)

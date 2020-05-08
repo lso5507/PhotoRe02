@@ -1,11 +1,12 @@
 package pjt.lw.Member;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Member {
 	private String memId;
 	private String memPw;
-	private List<String> imgUrl;
+	private List<String> imgUrl=new ArrayList<String>();
 	
 	public void setMemId(String memId) {
 		this.memId=memId;
@@ -22,8 +23,17 @@ public class Member {
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl.add(imgUrl);
 	}
-	public List<String> getImgUrl() {
-		return this.imgUrl;
+	public String getImgUrl() {
+		String str=null;
+		for(int i=0; i<=imgUrl.size();i++) {
+			 str = this.imgUrl.get(i)+",";
+		}
+		return str;
+	}
+	public int imgLength() {
+		
+		
+		return imgUrl.size();
 	}
 	public String toString() {
 		return this.memId+this.memPw+this.imgUrl;

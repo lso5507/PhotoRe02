@@ -57,23 +57,7 @@ body { font-size: 40%; }
   will-change: transform, opacity;
 }
 
-.page:nth-child(1) .left { background-image: url("http://i.imgur.com/fLYCaz8.jpg"); }
 
-.page:nth-child(1) .right { background-image: url("http://i.imgur.com/uFJxGwc.jpg"); }
-
-.page:nth-child(2) .left { background-image: url("http://i.imgur.com/scnm6Qu.jpg"); }
-
-.page:nth-child(2) .right { background-image: url("http://i.imgur.com/feqYEnm.jpg"); }
-
-.page:nth-child(3) .left { background-image: url("http://i.imgur.com/7y4mubP.jpg"); }
-
-.page:nth-child(3) .right { background-image: url("http://i.imgur.com/IOPkwbL.jpg"); }
-
-.page:nth-child(4) .left { background-image: url("http://i.imgur.com/KEnImct.jpg"); }
-
-.page:nth-child(4) .right { background-image: url("http://i.imgur.com/bLvkYTs.jpg"); }
-.page:nth-child(5) .left { background-image: url("http://i.imgur.com/7y4mubP.jpg"); }
-.page:nth-child(5) .right { background-image: url("http://i.imgur.com/bLvkYTs.jpg"); }
 
 .page.active .half {
   -webkit-transform: translateX(0) !important;

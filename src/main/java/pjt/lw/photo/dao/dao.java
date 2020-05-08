@@ -1,6 +1,8 @@
 package pjt.lw.photo.dao;
 
 import java.beans.PropertyVetoException;
+import java.io.File;
+import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -15,6 +17,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.mchange.v2.c3p0.ComboPooledDataSource;
 
@@ -140,5 +143,36 @@ public class Dao {
 		
 		return members.get(0);
 		
+	}
+	public boolean saveFile(MultipartFile file,String saveName) {
+		HttpServletRequest request = getCurrentRequest();
+		HttpSession session = request.getSession();
+		Member member = (Member) session.getAttribute("member");
+	    // 저장할 File 객체를 생성(껍데기 파일)ㄴ
+	    String UPLOAD_PATH = "C:\\Users\\LeeSeokwoon\\Desktop\\Album\\repo\\"+member.getMemId();
+	    File Folder = new File(UPLOAD_PATH);
+	    if (!Folder.exists()) {
+			try{
+			    Folder.mkdir(); //폴더 생성합니다.
+			    System.out.println("폴더가 생성되었습니다.");
+		        } 
+		        catch(Exception e){
+			    e.getStackTrace();
+		        }   
+	    }
+	    
+	    File saveFile = new File(UPLOAD_PATH,saveName); // 저장할 폴더 이름, 저장할 파일 이름
+	    System.out.println("UPLOAD_PATH : "+UPLOAD_PATH);
+	    		
+	    try {
+	        file.transferTo(saveFile); // 업로드 파일에 saveFile이라는 껍데기 입힘
+	        member.setImgUrl(UPLOAD_PATH+saveName);
+	        System.out.println(member.getImgUrl());
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        System.out.println("Error");
+	        return false;
+	    }
+	    return true;
 	}
 }

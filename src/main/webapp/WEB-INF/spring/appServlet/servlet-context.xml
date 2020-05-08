@@ -28,6 +28,10 @@
         value="org.springframework.web.servlet.view.tiles3.TilesView" />
     <beans:property name="order" value="1" />
 </beans:bean>
+<!-- file multipartResolver  -->
+<beans:bean id="multipartResolver"
+            class="org.springframework.web.multipart.commons.CommonsMultipartResolver"></beans:bean>
+
 <!-- Tiles 설정 파일 -->
 <beans:bean id="tilesConfigurer"
     class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">

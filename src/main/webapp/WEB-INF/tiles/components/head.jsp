@@ -25,6 +25,7 @@
 				<a href="${cp}/photo/pwModifyForm">PW_MODIFY</a> &nbsp;&nbsp; 
 				<a href="${cp}/photo/remove">REMOVE</a> &nbsp;&nbsp; 
 				<a href="${cp}/photo/logout">LOGOUT</a> &nbsp;&nbsp; 
+				<a href="${cp}/photo/uploadForm">UPLOAD</a> &nbsp;&nbsp; 
 			</c:if>
 	  </div>
 	</div>

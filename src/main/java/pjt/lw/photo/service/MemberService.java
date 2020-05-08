@@ -2,11 +2,19 @@ package pjt.lw.photo.service;
 
 
 
+import java.io.File;
+import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartRequest;
 
 import pjt.lw.Member.Member;
 import pjt.lw.photo.dao.Dao;
@@ -68,8 +76,38 @@ public class MemberService {
 	public void print(Member member) {
 		System.out.println("MemId:"+member.getMemId());
 		System.out.println("MemPw:"+member.getMemPw());
-		System.out.println("imgUrl:"+member.getImgUrl().size()+"개");
+//		System.out.println("imgUrl:"+member.getImgUrl().size()+"개");
 		
 	}
+	
+	public boolean imgInsert(MultipartFile file) {
+		// 파일 이름 변경
+		
+		
+		
+		
+	    String saveName = getCurrentDate("yyyyMMddHHmm") + "_" + file.getOriginalFilename();
+	    System.out.println(saveName);
+	    
+	    if(dao.saveFile(file,saveName))
+	    	return true;
+	    else
+	    	return false;
+
+
+		  
+		 
+		
+	}
+	public static String getCurrentDate(String format) {
+	       String dtStr = "";
+	       SimpleDateFormat sdf = new SimpleDateFormat(format);
+	       Date dt1 = new Date();
+
+	       dtStr = sdf.format(dt1);
+
+	       return dtStr;
+	}
+
 
 }
