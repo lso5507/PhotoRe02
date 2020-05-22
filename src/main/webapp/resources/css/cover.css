@@ -102,8 +102,7 @@ body { font-size: 40%; }
 }
 
 .page:nth-child(2) .left {
-  -webkit-transform: translateX(-100%);
-  -ms-transform: translateX(-100%);
+
   transform: translateX(-100%);
 }
 

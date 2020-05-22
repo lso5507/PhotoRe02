@@ -34,7 +34,7 @@ public class MemberService {
 			return null;
 		}
 		
-		return member;
+		return mem;
 		
 	}
 	public Member insert(Member member) {
