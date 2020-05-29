@@ -1,14 +1,9 @@
 package pjt.lw.photo;
 
-import java.io.BufferedOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.PrintWriter;
 import java.text.DateFormat;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
@@ -37,15 +32,14 @@ import pjt.lw.photo.service.MemberService;
  */
 @Controller
 public class HomeController {
-	@Autowired
-	MemberService service;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
 	 */
-
+	@Autowired
+	MemberService service;
 	
 	@ModelAttribute("serverTime")
 	public String getServerTime(Locale locale) {
@@ -94,13 +88,13 @@ public class HomeController {
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public String upload(MultipartFile	uploadfile,HttpServletResponse response) {
 		
-		  logger.info("upload() POST È£ï¿½ï¿½");
-		    logger.info("ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½: {}", uploadfile.getOriginalFilename());
-		    logger.info("ï¿½ï¿½ï¿½ï¿½ Å©ï¿½ï¿½: {}", uploadfile.getSize());
+		  logger.info("upload() POST È£Ãâ");
+		    logger.info("ÆÄÀÏ ÀÌ¸§: {}", uploadfile.getOriginalFilename());
+		    logger.info("ÆÄÀÏ Å©±â: {}", uploadfile.getSize());
 		    if(service.imgInsert(uploadfile))
 		    	try {
 		    	PrintWriter outs=response.getWriter();
-				outs.println("<script>alert('Success.'); location.href='/photo/home';</script>");  // javaï¿½ï¿½ï¿½ï¿½ js ï¿½ï¿½É¾ï¿½ ï¿½ï¿½ï¿½
+				outs.println("<script>alert('Success.'); location.href='/photo/home';</script>");  // java¿¡¼­ js ¸í·É¾î »ç¿ë
 				outs.flush();
 				return "/home";
 		    	}
@@ -110,7 +104,7 @@ public class HomeController {
 		    else {
 		    	try {
 			    	PrintWriter outs=response.getWriter();
-					outs.println("<script>alert('Fail.'); location.href='/photo/home';</script>");  // javaï¿½ï¿½ï¿½ï¿½ js ï¿½ï¿½É¾ï¿½ ï¿½ï¿½ï¿½
+					outs.println("<script>alert('Fail.'); location.href='/photo/home';</script>");  // java¿¡¼­ js ¸í·É¾î »ç¿ë
 					outs.flush();
 					return "/home";
 			    	}
@@ -124,24 +118,21 @@ public class HomeController {
 		return "upload";
 	}
 	@RequestMapping(value = "/home", method = RequestMethod.GET)
-	public String main(Locale locale, Model model,HttpServletRequest request) {
+	public String main(Locale locale, Model model) {
 		logger.info("Welcome home! The client locale is {}.", locale);
 		
-		String realPath=request.getSession().getServletContext().getRealPath("/");
-
 		
-		System.out.println(realPath);
 		
 		return "/home";
 	}
 	@RequestMapping(value="/login",method=RequestMethod.POST)
-	public String login(Member member, HttpSession session, HttpServletResponse response,Model model) {
-		Member mem = service.search(member); 
+	public String login(Member member, HttpSession session, HttpServletResponse response) {
+		Member mem = service.search(member);
 		
 		if(mem==null) {
-			try {	
+			try {
 				PrintWriter out=response.getWriter();
-				out.println("<script>alert('ï¿½Î±ï¿½ï¿½ï¿½ 	ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä¡ï¿½ï¿½ï¿½ï¿½ ï¿½Ê½ï¿½ï¿½Ï´ï¿½.'); location.href='/photo/home';</script>");  // javaï¿½ï¿½ï¿½ï¿½ js ï¿½ï¿½É¾ï¿½ ï¿½ï¿½ï¿½
+				out.println("<script>alert('·Î±×ÀÎ Á¤º¸°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.'); location.href='/photo/home';</script>");  // java¿¡¼­ js ¸í·É¾î »ç¿ë
 				out.flush();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -151,8 +142,7 @@ public class HomeController {
 			return "/loginForm";
 		}
 		session.setAttribute("member", mem);
-		model.addAttribute("mem",mem);
-//		session.setAttribute("imgLength", mem.getImgUrl());
+		session.setAttribute("imgLength", mem.getImgUrl());
 		return "/home";
 	}
 	@RequestMapping(value="/joinForm",method=RequestMethod.GET)
@@ -178,8 +168,8 @@ public class HomeController {
 		if(memId.equals(reMemId)) {
 
 			
-			Member member=service.modify(memId,"ID");   // IDï¿½ï¿½ï¿½ï¿½ PWï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ service ï¿½ï¿½Ã¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ ï¿½ï¿½ï¿½ï¿½ string ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-			request.setAttribute("member", member);  // request.setAttribute() ï¿½ï¿½ï¿½ï¿½ï¿½Ï¿ï¿½ ï¿½ï¿½Ü¿ï¿½ï¿½ï¿½ memberÅ¬ï¿½ï¿½ï¿½ï¿½ getter ï¿½ï¿½ï¿½
+			Member member=service.modify(memId,"ID");   // IDº¯°æ PWº¯°æÀ» service °´Ã¼¿¡¼­ ±¸ºĞÇÏ±â À§ÇØ string °ª Àü´Ş
+			request.setAttribute("member", member);  // request.setAttribute() ¼³Á¤ÇÏ¿© ºä´Ü¿¡¼­ memberÅ¬·¡½º getter »ç¿ë
 			if(member==null) {
 				return "modifyFail";
 			}
@@ -230,7 +220,7 @@ public class HomeController {
 		
 		session = request.getSession();
 		Member member= (Member) session.getAttribute("member"); 
-		mav.addObject("member",member);  //ï¿½ï¿½Ü¿ï¿½ï¿½ï¿½ memberï¿½ï¿½Ã¼ È£ï¿½â°¡ï¿½ï¿½
+		mav.addObject("member",member);  //ºä´Ü¿¡¼­ member°´Ã¼ È£Ãâ°¡´É
 		
 		Member mem=service.remove(member);
 		if(mem==null) {
@@ -247,18 +237,8 @@ public class HomeController {
 		Member member = (Member)session.getAttribute("member");
 		mav.addObject("member", member);
 		mav.setViewName("/logout");
-		session.invalidate(); //session ï¿½Ê±ï¿½È­
+		session.invalidate(); //session ÃÊ±âÈ­
 		
 		return mav;
 	}
-	@RequestMapping("/image")
-	public void image(HttpServletRequest request,HttpServletResponse res) throws IOException {
-		
-		
-	
-		System.out.println("ì´ë¯¸ì§€ë§µí•‘ì´ë¹ˆë‹¤.");
-		res.setCharacterEncoding("UTF-8");
-		res.setContentType("text/html; charset=UTF-8");
-	}
-	
 }

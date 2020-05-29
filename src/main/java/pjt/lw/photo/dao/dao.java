@@ -32,7 +32,7 @@ public class Dao {
 	private ComboPooledDataSource dataSource;
 	
 	private JdbcTemplate template;
-	public Dao() {  // jdbc ï¿½ï¿½ï¿½ï¿½
+	public Dao() {  // jdbc ¿¬°á
 		dataSource = new ComboPooledDataSource();
 		try {
 			dataSource.setDriverClass(driver);
@@ -122,7 +122,7 @@ public class Dao {
 	public Member memberSelect(Member member) {
 		List<Member> members = null;
 		
-		final String sql = "SELECT * FROM mem WHERE memId = ? AND memPw = ? ";
+		final String sql = "SELECT * FROM mem WHERE memId = ? AND memPw = ?";
 		
 		members = template.query(sql, new Object[]{member.getMemId(), member.getMemPw()}, new RowMapper<Member>() {
 
@@ -131,8 +131,6 @@ public class Dao {
 				Member mem = new Member();
 				mem.setMemId(rs.getString("memId"));
 				mem.setMemPw(rs.getString("memPw"));
-				System.out.println(rs.getString("imgUrl"));
-				mem.setImgUrl(rs.getString("imgUrl"));
 				
 				
 				return mem;
@@ -150,44 +148,31 @@ public class Dao {
 		HttpServletRequest request = getCurrentRequest();
 		HttpSession session = request.getSession();
 		Member member = (Member) session.getAttribute("member");
-	    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ File ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½)ï¿½ï¿½
+	    // ÀúÀåÇÒ File °´Ã¼¸¦ »ý¼º(²®µ¥±â ÆÄÀÏ)¤¤
 	    String UPLOAD_PATH = "C:\\Users\\LeeSeokwoon\\Desktop\\Album\\repo\\"+member.getMemId();
 	    File Folder = new File(UPLOAD_PATH);
 	    if (!Folder.exists()) {
 			try{
-			    Folder.mkdir(); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½.
-			    System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
+			    Folder.mkdir(); //Æú´õ »ý¼ºÇÕ´Ï´Ù.
+			    System.out.println("Æú´õ°¡ »ý¼ºµÇ¾ú½À´Ï´Ù.");
 		        } 
 		        catch(Exception e){
 			    e.getStackTrace();
 		        }   
 	    }
 	    
-	    File saveFile = new File(UPLOAD_PATH,saveName); // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½, ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¸ï¿½
+	    File saveFile = new File(UPLOAD_PATH,saveName); // ÀúÀåÇÒ Æú´õ ÀÌ¸§, ÀúÀåÇÒ ÆÄÀÏ ÀÌ¸§
 	    System.out.println("UPLOAD_PATH : "+UPLOAD_PATH);
 	    		
 	    try {
-	        file.transferTo(saveFile); // ï¿½ï¿½ï¿½Îµï¿½ ï¿½ï¿½ï¿½Ï¿ï¿½ saveFileï¿½Ì¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
-	        
-	        member.setImgUrl(member.getMemId()+"/"+saveName);
-	       if( saveUpdate(member)==0)
-	    	   System.out.println("UPDATE ERROR");
-	       
-
+	        file.transferTo(saveFile); // ¾÷·Îµå ÆÄÀÏ¿¡ saveFileÀÌ¶ó´Â ²®µ¥±â ÀÔÈû
+	        member.setImgUrl(UPLOAD_PATH+saveName);
+	        System.out.println(member.getImgUrl());
 	    } catch (IOException e) {
 	        e.printStackTrace();
 	        System.out.println("Error");
 	        return false;
 	    }
 	    return true;
-	}
-	
-	public int saveUpdate(Member member) {
-		final String sql = "UPDATE mem SET imgUrl = ? WHERE memId = ?";
-		int result = template.update(sql,member.getImgUrl(),member.getMemId());
-
-		
-		
-		return result;
 	}
 }

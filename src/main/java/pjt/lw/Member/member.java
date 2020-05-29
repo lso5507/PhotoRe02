@@ -6,13 +6,13 @@ import java.util.List;
 public class Member {
 	private String memId;
 	private String memPw;
-	private String imgUrl;
+	private List<String> imgUrl=new ArrayList<String>();
 	
 	public void setMemId(String memId) {
 		this.memId=memId;
 	}
 	public String getMemId() {
-		return this.memId;  
+		return this.memId;
 	}
 	public void setMemPw(String memPw) {
 		this.memPw=memPw;
@@ -21,19 +21,20 @@ public class Member {
 		return this.memPw;
 	}
 	public void setImgUrl(String imgUrl) {
-		if(this.imgUrl!=null)
-			this.imgUrl+=","+imgUrl;
-		else
-			this.imgUrl=imgUrl;
+		this.imgUrl.add(imgUrl);
 	}
 	public String getImgUrl() {
-		return this.imgUrl;
+		String str=null;
+		for(int i=0; i<=imgUrl.size();i++) {
+			 str = this.imgUrl.get(i)+",";
+		}
+		return str;
 	}
-//	public int imgLength() {
-//		
-//		
-////		return imgUrl.length()
-//	}
+	public int imgLength() {
+		
+		
+		return imgUrl.size();
+	}
 	public String toString() {
 		return this.memId+this.memPw+this.imgUrl;
 		
