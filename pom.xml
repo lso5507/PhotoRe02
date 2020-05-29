@@ -162,6 +162,9 @@
 			    <artifactId>commons-fileupload</artifactId>
 			    <version>1.3.3</version>
 			</dependency>
+<<<<<<< HEAD
+=======
+>>>>>>> parent of 65bf712... ver 1.6(photo)
 =======
 >>>>>>> parent of 65bf712... ver 1.6(photo)
 	</dependencies>
