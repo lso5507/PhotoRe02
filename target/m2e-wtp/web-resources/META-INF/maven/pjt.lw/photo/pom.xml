@@ -152,14 +152,13 @@
 			         <artifactId>commons-fileupload</artifactId>
 			         <version>1.2.1</version>
 			</dependency>
-<<<<<<< HEAD
+
 			<dependency>
 			         <groupId>commons-io</groupId>
 			         <artifactId>commons-io</artifactId>
 			         <version>1.4</version>
 			</dependency>
-=======
->>>>>>> parent of 65bf712... ver 1.6(photo)
+
 	</dependencies>
     <build>
         <plugins>
