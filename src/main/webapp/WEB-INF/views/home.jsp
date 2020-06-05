@@ -76,14 +76,13 @@
 
 <div class="body">	
 	<div class="scene">
-	  <div class="page page-1 active">
-	    <div class="half left"></div>
-	    <div class="half right"></div>
-	  </div>
-	  <div class="page page-2">
-	    <div class="half left"></div>
-	    <div class="half right"></div>
-	  </div>
+	-
+		<c:forEach items="${member.imgUrl}" var="url">
+		
+			<div class="half left"><img src="${pageContext.request.contextPath}/resources/image/${url}"></div>
+			<div class="half right"></div>
+		
+		</c:forEach>
 	</div>
 	<div class="nav-panel">
 	  <div class="scroll-btn up"></div>
@@ -102,16 +101,8 @@
  
         <script type="text/javascript">
         $(function(){
-        	var imgUrl = "<%=session.getAttribute("imgLength") %>"
-        	
-        	alert(imgUrl);
-			var temp = imgUrl.split(",");
-        	for(let i=0; i<=temp.length; i+=2){
-        		
-        	}
-        	$('.page:nth-child(1) .left').css('background-image', 'url(' + 'http://i.imgur.com/KEnImct.jpg' + ')');
-        	
-        	
+			var divEle=document.getElementsByClassName("scene");
+			var url =
         });			
      	</script>
 

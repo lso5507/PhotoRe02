@@ -76,26 +76,31 @@ public class MemberService {
 	public void print(Member member) {
 		System.out.println("MemId:"+member.getMemId());
 		System.out.println("MemPw:"+member.getMemPw());
-//		System.out.println("imgUrl:"+member.getImgUrl().size()+"��");
+//		System.out.println("imgUrl:"+member.getImgUrl().size()+"��");
 		
 	}
 	
-	public boolean imgInsert(MultipartFile file) {
-		// ���� �̸� ����
-		
+	public boolean imgInsert(MultipartFile file,String realPath) {
+		// ���� �̸� ����
 		
 		
 		
 	    String saveName = getCurrentDate("yyyyMMddHHmm") + "_" + file.getOriginalFilename();
-	    System.out.println(saveName);
-	    
-	    if(dao.saveFile(file,saveName))
-	    	return true;
-	    else
-	    	return false;
+	    File saveFile = new File(realPath,saveName); 
+	    File filePath = new File(realPath);
 
+	    if(!filePath.exists()) {
+	    	filePath.mkdirs();   // 만약에 path 해당하는 경로가 없으면 폴더를 만듬
+	    }
+	    try {
+	    	file.transferTo(saveFile); // 파일 저장 
+	    }
+	    catch(Exception e) {
+	    	System.out.println("Error:"+e);
+	    }
 
-		  
+	    if(dao.saveFile(saveName)) return true;
+	    else return false;
 		 
 		
 	}

@@ -6,7 +6,7 @@ import java.util.List;
 public class Member {
 	private String memId;
 	private String memPw;
-	private List<String> imgUrl=new ArrayList<String>();
+	private String imgUrl;
 	
 	public void setMemId(String memId) {
 		this.memId=memId;
@@ -21,20 +21,15 @@ public class Member {
 		return this.memPw;
 	}
 	public void setImgUrl(String imgUrl) {
-		this.imgUrl.add(imgUrl);
+		this.imgUrl=imgUrl;
 	}
-	public String getImgUrl() {
-		String str=null;
-		for(int i=0; i<=imgUrl.size();i++) {
-			 str = this.imgUrl.get(i)+",";
-		}
-		return str;
-	}
-	public int imgLength() {
+	public String[] getImgUrl() {
+		String[] imgArr=imgUrl.split(","); // ,를 기준으로 나누기
 		
 		
-		return imgUrl.size();
+		return imgArr;
 	}
+
 	public String toString() {
 		return this.memId+this.memPw+this.imgUrl;
 		

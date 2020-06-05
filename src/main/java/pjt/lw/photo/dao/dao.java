@@ -3,6 +3,7 @@ package pjt.lw.photo.dao;
 import java.beans.PropertyVetoException;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -32,7 +33,7 @@ public class Dao {
 	private ComboPooledDataSource dataSource;
 	
 	private JdbcTemplate template;
-	public Dao() {  // jdbc 연결
+	public Dao() {  // jdbc 占쏙옙占쏙옙
 		dataSource = new ComboPooledDataSource();
 		try {
 			dataSource.setDriverClass(driver);
@@ -131,7 +132,7 @@ public class Dao {
 				Member mem = new Member();
 				mem.setMemId(rs.getString("memId"));
 				mem.setMemPw(rs.getString("memPw"));
-				
+				mem.setImgUrl(rs.getString("imgUrl"));
 				
 				return mem;
 			}
@@ -144,35 +145,16 @@ public class Dao {
 		return members.get(0);
 		
 	}
-	public boolean saveFile(MultipartFile file,String saveName) {
+	public boolean saveFile(String saveName) {
 		HttpServletRequest request = getCurrentRequest();
 		HttpSession session = request.getSession();
 		Member member = (Member) session.getAttribute("member");
-	    // 저장할 File 객체를 생성(껍데기 파일)ㄴ
-	    String UPLOAD_PATH = "C:\\Users\\LeeSeokwoon\\Desktop\\Album\\repo\\"+member.getMemId();
-	    File Folder = new File(UPLOAD_PATH);
-	    if (!Folder.exists()) {
-			try{
-			    Folder.mkdir(); //폴더 생성합니다.
-			    System.out.println("폴더가 생성되었습니다.");
-		        } 
-		        catch(Exception e){
-			    e.getStackTrace();
-		        }   
-	    }
-	    
-	    File saveFile = new File(UPLOAD_PATH,saveName); // 저장할 폴더 이름, 저장할 파일 이름
-	    System.out.println("UPLOAD_PATH : "+UPLOAD_PATH);
-	    		
-	    try {
-	        file.transferTo(saveFile); // 업로드 파일에 saveFile이라는 껍데기 입힘
-	        member.setImgUrl(UPLOAD_PATH+saveName);
-	        System.out.println(member.getImgUrl());
-	    } catch (IOException e) {
-	        e.printStackTrace();
-	        System.out.println("Error");
-	        return false;
-	    }
-	    return true;
+		final String sql = "UPDATE mem SET imgUrl = ? WHERE memId = ?";
+		int result = template.update(sql,","+member.getMemId()+File.separator+saveName,member.getMemId());
+		if(result==0)
+			return false;
+		else
+			return true;
+		
 	}
 }
