@@ -60,7 +60,7 @@ public class HomeController {
 
 		
 		
-		return "/home";
+		return "home";
 	}
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
 	public String test(HttpServletRequest request) {
@@ -88,14 +88,14 @@ public class HomeController {
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
 	public String upload(MultipartFile	uploadfile,HttpServletResponse response,HttpServletRequest request,HttpSession session) {
 		Member member=(Member) session.getAttribute("member");
-		if(member!=null) { //세션이 유지됐을때만 업로드
+		if(member!=null) { //�꽭�뀡�씠 �쑀吏��릱�쓣�븣留� �뾽濡쒕뱶
 			String realPath=request.getSession().getServletContext().getRealPath("/resources/image/"+member.getMemId());	
-
+			System.out.println(request.getSession().getServletContext().getRealPath("/resources/image/"+member.getMemId()));
 			
-		   if(service.imgInsert(uploadfile,realPath)) { //true반환되면 성공
+		   if(service.imgInsert(uploadfile,realPath)) { //true諛섑솚�릺硫� �꽦怨�
 		    	try {
 		    	PrintWriter outs=response.getWriter();
-				outs.println("<script>alert('Success.'); location.href='/photo/home';</script>");  // java���� js ��ɾ� ���
+				outs.println("<script>alert('Success.'); location.href='/photo/home';</script>");  // java占쏙옙占쏙옙 js 占쏙옙占� 占쏙옙占�
 				outs.flush();
 				return "/home";
 		    	}
@@ -106,7 +106,7 @@ public class HomeController {
 		    else {
 		    	try {
 			    	PrintWriter outs=response.getWriter();
-					outs.println("<script>alert('Fail.'); location.href='/photo/home';</script>");  // java���� js ��ɾ� ���
+					outs.println("<script>alert('Fail.'); location.href='/photo/home';</script>");  // java占쏙옙占쏙옙 js 占쏙옙占� 占쏙옙占�
 					outs.flush();
 					return "/home";
 			    	}
@@ -137,7 +137,7 @@ public class HomeController {
 		if(mem==null) {
 			try {
 				PrintWriter out=response.getWriter();
-				out.println("<script>alert('�α��� ������ ��ġ���� �ʽ��ϴ�.'); location.href='/photo/home';</script>");  // java���� js ��ɾ� ���
+				out.println("<script>alert('로그인실패.'); location.href='/photo/home';</script>");  // java占쏙옙占쏙옙 js 占쏙옙占� 占쏙옙占�
 				out.flush();
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
@@ -148,7 +148,7 @@ public class HomeController {
 		}
 		session.setAttribute("member", mem);
 
-		return "/home";
+		return "home";
 	}
 	@RequestMapping(value="/joinForm",method=RequestMethod.GET)
 	public String joinForm(Member member, HttpServletRequest request) {
@@ -173,8 +173,8 @@ public class HomeController {
 		if(memId.equals(reMemId)) {
 
 			
-			Member member=service.modify(memId,"ID");   // ID���� PW������ service ��ü���� �����ϱ� ���� string �� ����
-			request.setAttribute("member", member);  // request.setAttribute() �����Ͽ� ��ܿ��� memberŬ���� getter ���
+			Member member=service.modify(memId,"ID");   // ID占쏙옙占쏙옙 PW占쏙옙占쏙옙占쏙옙 service 占쏙옙체占쏙옙占쏙옙 占쏙옙占쏙옙占싹깍옙 占쏙옙占쏙옙 string 占쏙옙 占쏙옙占쏙옙
+			request.setAttribute("member", member);  // request.setAttribute() 占쏙옙占쏙옙占싹울옙 占쏙옙餠占쏙옙占� member클占쏙옙占쏙옙 getter 占쏙옙占�
 			if(member==null) {
 				return "modifyFail";
 			}
@@ -225,7 +225,7 @@ public class HomeController {
 		
 		session = request.getSession();
 		Member member= (Member) session.getAttribute("member"); 
-		mav.addObject("member",member);  //��ܿ��� member��ü ȣ�Ⱑ��
+		mav.addObject("member",member);  //占쏙옙餠占쏙옙占� member占쏙옙체 호占썩가占쏙옙
 		
 		Member mem=service.remove(member);
 		if(mem==null) {
@@ -242,7 +242,7 @@ public class HomeController {
 		Member member = (Member)session.getAttribute("member");
 		mav.addObject("member", member);
 		mav.setViewName("/logout");
-		session.invalidate(); //session �ʱ�ȭ
+		session.invalidate(); //session 占십깍옙화
 		
 		return mav;
 	}

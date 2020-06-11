@@ -1,7 +1,7 @@
 package pjt.lw.Member;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class Member {
 	private String memId;
@@ -22,14 +22,24 @@ public class Member {
 	}
 	public void setImgUrl(String imgUrl) {
 		this.imgUrl=imgUrl;
-	}
-	public String[] getImgUrl() {
-		String[] imgArr=imgUrl.split(","); // ,를 기준으로 나누기
 		
-		
-		return imgArr;
 	}
-
+	public ArrayList<String> getImgList() {
+		String [] imgArr =this.imgUrl.split(",");
+		ArrayList<String>imgList=new ArrayList<String>();
+		for(String i:imgArr) {
+			if(i.contains(memId)) {
+				System.out.println(i);
+				imgList.add(i);
+			}
+		}
+		
+		return imgList;
+	}
+	public String getImgUrl() {
+		return this.imgUrl;
+		
+	}
 	public String toString() {
 		return this.memId+this.memPw+this.imgUrl;
 		

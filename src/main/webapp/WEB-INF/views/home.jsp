@@ -71,17 +71,26 @@
         
 </div>	
 	</c:if>
-	
-     <c:if test="${!empty member}">
-
+<c:if test="${!empty member}">
+	      <script src="custom.js"></script>
 <div class="body">	
 	<div class="scene">
-	-
-		<c:forEach items="${member.imgUrl}" var="url">
-		
-			<div class="half left"><img src="${pageContext.request.contextPath}/resources/image/${url}"></div>
-			<div class="half right"></div>
-		
+	
+<%-- 	<img src="${pageContext.request.contextPath}/resources/image/lso/test.jpg"> --%>
+		<div class="page page-1 active">
+			
+	    	<div class="half left"></div>
+	    	<div class="half right"></div>
+		</div>
+		<c:forEach var="url" items="${member.imgList}" varStatus="status">
+			<div class=page page-<c:out value="${status.count}"></c:out>>
+				<div class="half left">
+					<img src="${pageContext.request.contextPath}/resources/image/lso/test.jpg">
+				</div>
+	    		<div class="half right">
+	    			<img src="${pageContext.request.contextPath}/resources/image/lso/test.jpg">
+	    		</div>
+			</div>
 		</c:forEach>
 	</div>
 	<div class="nav-panel">
@@ -98,13 +107,7 @@
 	  </nav>
 	</div>
         
- 
-        <script type="text/javascript">
-        $(function(){
-			var divEle=document.getElementsByClassName("scene");
-			var url =
-        });			
-     	</script>
+
 
 
 </div>	
